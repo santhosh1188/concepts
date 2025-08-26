@@ -1,0 +1,57 @@
+CLI practice drill2 
+Pipes
+1. Download contents of harry potter
+curl -o harrypotter.txt https://raw.githubusercontent.com/bobdeng/owlreader/master/ERead/assets/books/Harry%20Potter%20and%20the%20Goblet%20of%20Fire.txt
+2. print first three line
+head -n 3 harrypotter.txt
+ 3. print last 10 lines 
+ tail -n 10 harrypotter.txt
+ 4.how many times the following words occur in book
+Harry- grep -0 "Harry" harrypotter.txt|wc -l (4082)
+Ron- grep -0 "Ron" harrypotter.txt|wc -l (1044)
+Hermione- grep -0 "Hermione" harrypotter.txt|wc -l (872)
+Dumbledore- grep -0 "Dumbledore" harrypotter.txt|wc -l (595)
+
+5. Print lines from 100 through 200 in the book
+sed -n '100,200p' harrypotter.txt
+6. How many unique words are present in the book?
+tr '[:space:][:punct:]' '\n' < goblet.txt | tr 'A-Z' 'a-z' | sort | uniq -c | wc -l
+Explanation:
+tr → split into words
+sort → alphabetize
+uniq -c → count unique
+wc -l → count lines (unique words)
+
+Processes & Ports Section
+
+1.List browses pid and ppid
+ps -C chrome -o pid,ppid,cmd
+
+2.Stop browser from command line
+kill -9 <PID>
+
+3. List top 3 processes by cpu usage
+ps -eo pid,ppid,cmd,%cpu --sort=-%cpu | head -n 4
+
+4. list top 3 processes by memory usage
+ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 4
+ 5. start python http srever on port 8000
+ python3 -m http.server 8000
+ 
+ 6. open another tab and stop process
+ lsof -i :8000 - find PID
+kill -9 <PID> - kill it -9 specifies signal to be sent, which is SIGKILL
+
+7. Start python HTTP server on port 90
+sudo python3 -m http.server 90
+
+8. display all active TCP/UDP connections
+ss -tulnp - ss provide info abouy network sockets
+
+9. Find PID of process listening on port 5432 (Postgres usually)
+lsof -i :5432
+
+
+
+
+
